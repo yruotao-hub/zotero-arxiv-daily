@@ -83,15 +83,11 @@ class ArxivPaper:
                 # 尝试下载源文件
                 file = self._paper.download_source(dirpath=tmpdirname)
             except HTTPError as e:
-    # 捕获 HTTP 错误
-    if e.code == 404:
-        # 如果是 404 Not Found，说明源文件不存在，这是正常情况
-        logger.warning(f"Source for {self.arxiv_id} not found (404).\nSkipping source analysis.")
-        return None
-    else:
-        # 如果是其他 HTTP 错误 (如 503)，这可能是临时性问题，值得记录下来
-        logger.error(f"HTTP Error {e.code} when downloading source for {self.arxiv_id}: {e.reason}")
-        raise
+    logger.warning(
+        f"HTTP Error {e.code} when downloading source for {self.arxiv_id}: {e.reason}. "
+        "Skipping source analysis for this paper."
+    )
+    return None
             except Exception as e:
                 logger.error(f"Error when downloading source for {self.arxiv_id}: {e}")
                 return None
