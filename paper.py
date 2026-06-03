@@ -83,11 +83,11 @@ class ArxivPaper:
                 # 尝试下载源文件
                 file = self._paper.download_source(dirpath=tmpdirname)
             except HTTPError as e:
-    logger.warning(
-        f"HTTP Error {e.code} when downloading source for {self.arxiv_id}: {e.reason}. "
-        "Skipping source analysis for this paper."
-    )
-    return None
+                logger.warning(
+                    f"HTTP Error {e.code} when downloading source for {self.arxiv_id}: {e.reason}. "
+                    "Skipping source analysis for this paper."
+                )
+                return None
             except Exception as e:
                 logger.error(f"Error when downloading source for {self.arxiv_id}: {e}")
                 return None
