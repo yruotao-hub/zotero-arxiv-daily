@@ -133,18 +133,18 @@ def render_email(papers:list[ArxivPaper]):
         else:
             authors = ', '.join(author_list[:3] + ['...'] + author_list[-2:])
         try:
-    paper_affiliations = p.affiliations
-except Exception as e:
-    logger.warning(f"Failed to get affiliations for {p.arxiv_id}: {e}")
-    paper_affiliations = None
+            paper_affiliations = p.affiliations
+        except Exception as e:
+            logger.warning(f"Failed to get affiliations for {p.arxiv_id}: {e}")
+            paper_affiliations = None
 
-if paper_affiliations:
-    affiliations = paper_affiliations[:5]
-    affiliations = ', '.join(affiliations)
-    if len(paper_affiliations) > 5:
-        affiliations += ', ...'
-else:
-    affiliations = ''
+        if paper_affiliations:
+            affiliations = paper_affiliations[:5]
+            affiliations = ', '.join(affiliations)
+            if len(paper_affiliations) > 5:
+                affiliations += ', ...'
+        else:
+            affiliations = ''
         parts.append(get_block_html(p.title, authors,rate,p.arxiv_id ,p.tldr, p.pdf_url, p.code_url, affiliations))
         time.sleep(10)
 
